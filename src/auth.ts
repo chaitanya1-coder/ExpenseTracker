@@ -69,10 +69,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             email: user.email,
             image: user.image,
           });
-          const savedUser = await newUser.save();
-          user.id = savedUser._id.toString();
-        } else {
-          user.id = existingUser._id.toString();
+          await newUser.save();
         }
       }
       return true;
@@ -83,8 +80,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return session;
     },
-    async jwt({ token, user }) {
-      if (user) {
+    async jwt({ token, user, account }) {
+      if (account?.provider === "google") {
+        await connectToDatabase();
+        const dbUser = await User.findOne({ email: token.email });
+        if (dbUser) {
+          token.sub = dbUser._id.toString();
+        }
+      } else if (user) {
         token.sub = user.id;
       }
       return token;
