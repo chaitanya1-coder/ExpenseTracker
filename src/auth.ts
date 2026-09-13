@@ -8,6 +8,7 @@ import { headers } from "next/headers"
 import { checkRateLimit } from "@/lib/rateLimit"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  trustHost: true,
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
