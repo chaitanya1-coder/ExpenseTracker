@@ -1,6 +1,7 @@
 import mongoose, { Schema, model, models } from "mongoose";
 
 const FixedExpenseSchema = new Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   monthYear: { type: String, required: true }, // Format: YYYY-MM
   category: { 
     type: String, 

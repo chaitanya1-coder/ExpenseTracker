@@ -1,10 +1,11 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, CheckCircle2, Circle, Plus, X, Pencil, Trash2, Eye, EyeOff } from "lucide-react";
+import { ChevronLeft, ChevronRight, CheckCircle2, Circle, Plus, X, Pencil, Trash2, Eye, EyeOff, LogOut } from "lucide-react";
 import { markFixedExpensePaid, addFixedExpense, editFixedExpense, deleteFixedExpense } from "@/app/actions/expenseActions";
 import { format, parse, subMonths, addMonths } from "date-fns";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 interface FixedExpense {
   _id: string;
@@ -160,7 +161,12 @@ export default function MonthlyHeader({
           <ChevronLeft className="w-6 h-6" />
         </button>
         <div className="flex flex-col items-center">
-          <span className="text-xs font-medium text-indigo-200 tracking-wider mb-1 uppercase">Chaitanya's Expenses</span>
+          <span className="text-xs font-medium text-indigo-200 tracking-wider mb-1 uppercase flex items-center gap-2">
+            My Expenses
+            <button onClick={() => signOut()} className="hover:text-white transition-colors" title="Sign Out">
+              <LogOut className="w-3 h-3" />
+            </button>
+          </span>
           <h2 className="text-xl font-bold tracking-wide">{formattedMonth}</h2>
         </div>
         <button 

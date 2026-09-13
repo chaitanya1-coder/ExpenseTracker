@@ -1,6 +1,7 @@
 import mongoose, { Schema, model, models } from "mongoose";
 
 const ExpenseSchema = new Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   date: { type: Date, default: Date.now, required: true },
   category: { 
     type: String, 
